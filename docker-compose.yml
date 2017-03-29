@@ -1,0 +1,35 @@
+version: '3'
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile-ruby
+    volumes:
+      - ./code:/code
+    ports:
+      - 3000:3000
+    depends_on: [postgres, redis, mongo, mysql]
+    entrypoint: /bin/bash --login
+    stdin_open: true
+    tty: true
+
+  postgres:
+    image: postgres
+    volumes:
+      - postgres-db-data:/var/lib/postgresql/data
+  mysql:
+    image: mysql
+    volumes:
+      - mysql-db-data:/var/lib/mysql
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+
+  mongo:
+    image: mongo
+  redis:
+    image: redis:alpine
+
+volumes:
+  postgres-db-data:
+  mysql-db-data:
+

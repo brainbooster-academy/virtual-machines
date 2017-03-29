@@ -1,0 +1,7 @@
+FROM tzenderman/docker-rvm:latest
+
+WORKDIR /code
+
+RUN rvm install ruby
+RUN rvm install jruby
+RUN rvm install mruby
